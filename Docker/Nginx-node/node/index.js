@@ -8,18 +8,15 @@ const config = {
   database: 'nodedb'
 }
 const mysql = require('mysql');
-const connection = mysql.createConnection(config);
-
-const sql = `INSERT INTO people(name) values('Yan')`;
-connection.query(sql)
-connection.end()
 
 app.get('/', async (req, res) => {
-  const newConnection = mysql.createConnection(config)
-  newConnection.query('SELECT * FROM people', (err, response) => {
+  const connection = mysql.createConnection(config)
+  const sql = `INSERT INTO people(name) values('Yan')`;
+  connection.query(sql)
+  connection.query('SELECT * FROM people', (err, response) => {
     res.send(`<h1>Full Cycle Rocks</h1> <br> <h2>${response.map(user => `${user.name}`)}</h2>`)});
   
-  newConnection.end()
+    connection.end()
 })
 
 app.listen(port, () => {
